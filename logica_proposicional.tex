@@ -1,0 +1,224 @@
+\section{Logica proposicional}
+
+\begin{questions}
+
+\question Definir consistente, maximal consistente, y demostrar que $\varphi$ es teorema de $\Gamma$ si y s\'olo si $\varphi$ pertenece a $\Gamma$. 
+
+\begin{solution}
+
+ {\it Def. } Un conjunto $\Gamma\subseteq$FORM es consistente si no existe $\varphi\in$FORM tal que $\Gamma\vdash\varphi$ y $\Gamma\nvdash\varphi$.
+ 
+ {\it Def. } Un conjunto $\Gamma\subseteq$FORM es maximal consistente en SP si es consistente y para toda f\'ormula $\varphi$, $\varphi\in\Gamma$ o existe $\psi$ tal que $\Gamma\cup\{\varphi\}\vdash\psi$ y $\Gamma\cup\{\varphi\}\nvdash\psi$.
+\end{solution}
+
+\question Definir conjunto maximal consistente y probar que si $\Gamma$ es m.c. entonces: 
+
+\begin{enumerate}[a)]
+ \item $\varphi\in\Gamma$ o (exclusivo) $\neg\varphi\in\Gamma$
+ \item $\varphi\in\Gamma$ sii $\Gamma\vdash\varphi$
+\end{enumerate}
+
+\begin{solution}
+ \begin{enumerate}[a)]
+  \item No puede ser que $\varphi$ y $\neg\varphi$ est\'en en $\Gamma$ porque ser\'ia inconsistente.
+  
+  Supongamos que ninguna est\'a. Como $\Gamma$ es maximal y por proposici\'on ($\Gamma\cup\{\neg\varphi\}$ es inconsistente sii $\Gamma\vdash\varphi$): 
+  
+  \begin{itemize}
+   \item $\Gamma\cup\{\varphi\}$ es inconsistente $\Rightarrow \Gamma\vdash\neg\varphi$
+   \item $\Gamma\cup\{\neg\varphi\}$ es inconsistente $\Rightarrow \Gamma\vdash\varphi$
+  \end{itemize}
+
+  Luego $\Gamma$ es inconsistente. 
+ \end{enumerate}
+
+\end{solution}
+
+
+\question Enunciar y demostrar el Lema de Lindenbaum para la l'ogica proposicional.
+\begin{solution}
+
+{\it Lema de Lindenbaum:} Si $\Gamma \subseteq$ FORM es consistente, existe $\Gamma'$ maximal consistente tal que $\Gamma \subseteq \Gamma'$
+
+{\it Demostraci\'on: }
+
+Hay que encontrar el $\Gamma'$ tal que es m.c. y contiene a $\Gamma$. 
+
+Enumeremos todas las f'ormulas $\varphi_1, \varphi_2, \dots$ y definimos: 
+
+$$\Gamma_i = \left\{
+  \begin{array}{l l}
+  \Gamma 				& \text{si } i = 0 \\
+  \Gamma_{i-1} \cup \{ \varphi_i \} 	& \text{si } \Gamma_{i-1} \cup \{ \varphi_i \} \text{ es consistente} \\ 
+  \Gamma_{i-1} 				& \text{si no} 
+  \end{array}
+  \right.
+  $$
+
+Luego definimos $\Gamma' = \bigcup_{i\geq 0} \Gamma_i$. Y terminamos. $\Gamma'$ es \begin{inparaenum}[(a)] \item consistente, \item maximal y \item contiene a $\Gamma$ \end{inparaenum} como quer'iamos.
+
+\begin{enumerate}[(a)]
+ \item Si no fuera consistente, existir'ia $\psi$ tal que: $\Gamma' \vdash \psi$ y $\Gamma' \nvdash \psi$. En ambas derivaciones aparece \'unicamente $\{ \gamma_1, \dots, \gamma_k \} \subseteq \Gamma'$. Sea $j$ el m'inimo 'indice tal que $\{ \gamma_1, \dots, \gamma_k \} \subseteq \Gamma_j$. Entonces $\Gamma_j$ es inconsistente, y esto es absurdo por que $\Gamma'$ se construye de $\Gamma_i$ consistentes. 
+ 
+ \item Es maximal, porque supongamos un $\varphi \notin \Gamma'$. Debe existir un $n$ tal que $\varphi_n = \varphi$. Y como $\varphi_n \notin \Gamma_n$ (porque sino estar'ia en $\Gamma'$), entonces $\Gamma_{n-1} \cup \{ \varphi_n \}$ es inconsistente. Luego $\Gamma' \cup \{ \varphi_n \}$ es inconsistente. 
+\end{enumerate}
+
+\end{solution}
+
+
+\question Enunciar y demostrar el teorema de la Deducci\'on. 
+
+\begin{solution}
+
+ {\it Teorema de la Deducci\'on: } Si $\Gamma\cup\{\varphi\}\vdash\psi$ entonces $\Gamma \vdash \varphi\rightarrow\psi$.
+  
+ {\it Demostraci\'on: } Por inducci\'on en la demostraci\'on de $\Gamma\cup\{\varphi\}\vdash\psi$.
+ 
+ Supongamos que $\varphi_1, \dots, \varphi_n(=\psi)$ es una derivaci\'on de $\psi$ a partir de $\Gamma\cup\{\varphi\}$.
+ 
+ \begin{itemize}[\quad]
+  \item[Caso base ($n=1$):] la derivaci\'on es una s\'ola f\'ormula ($\varphi_1=\psi$). Queremos ver que $\Gamma\vdash\varphi\rightarrow\psi$. Hay 3 posibilidades: 
+  \begin{enumerate}[a)]
+   \item $\psi$ es un axioma de SP. Usando el mecanismo deductivo: 
+    \begin{enumerate}[1.]
+      \item $\psi$ (por ser axioma)
+      \item $\psi\rightarrow(\varphi\rightarrow\psi)$  (por SP1)
+      \item $\psi\rightarrow\varphi$ (por MP 1,2)
+    \end{enumerate}
+    
+   \item $\psi\in\Gamma$
+   \begin{enumerate}[1.]
+      \item $\psi$ (por $\psi\in\Gamma$)
+      \item $\psi\rightarrow(\varphi\rightarrow\psi)$  (por SP1)
+      \item $\psi\rightarrow\varphi$ (por MP 1,2)
+    \end{enumerate}
+    
+   \item $\psi=\varphi$. 
+    Vale porque $\varphi\rightarrow\varphi$ (visto en clase)
+  \end{enumerate}
+
+  \item[Paso inductivo:] HI: {\it ``para toda derivaci\'on $\psi'$ a partir de $\Gamma\cup\{\varphi\}$ de longitud menor a $n$ vale $\Gamma\vdash\varphi\rightarrow\psi$''}. Queremos ver que $\Gamma\vdash\varphi\rightarrow\psi$. Hay 4 posibilidades: 
+  \begin{enumerate}[a)]
+   \item $\psi$ es un axioma de SP: igual que caso base. 
+   \item $\psi\in\Gamma$: igual que en caso base. 
+   \item $\psi=\varphi$: igual que en caso base. 
+   \item $\psi$ se infiere por MP de $\varphi_i$ y $\varphi_j$ ($i,j<n$): 
+   \begin{enumerate}[1.]
+    \item Sin p\'erdida de generalidad: $\varphi_j=\varphi_i\rightarrow\psi$. 
+    \item $\Gamma\cup\{\varphi\}\vdash\varphi_i$ y la derivaci\'on tiene longitud menor a $n$. Por HI: $\Gamma\vdash\varphi\rightarrow\varphi_i$
+    \item $\Gamma\cup\{\varphi\}\vdash\varphi_j$ y la derivaci\'on tiene longitud menor a $n$. Por HI: $\Gamma\vdash\varphi\rightarrow\varphi_j$ (i.e. $\Gamma\vdash\varphi\rightarrow(\varphi_j\rightarrow\psi)$.
+    \item (Por SP2) $\vdash (\varphi\rightarrow(\varphi_i\rightarrow\psi))\rightarrow((\varphi\rightarrow\varphi_i)\rightarrow(\varphi\rightarrow\psi))$.
+    \item (Por MP 2 veces) $\Gamma\vdash\varphi\rightarrow\psi$.
+   \end{enumerate}
+  \end{enumerate}
+
+ \end{itemize}
+
+\end{solution}
+
+\question Usando (el teorema de) correctitud de la lógica proposicional probar que si (un conjunto de f'ormulas) $\Gamma$ es satisfactible entonces $\Gamma$ es consistente. 
+\begin{solution}
+
+Supongamos que $\Gamma$ es satisfacible, y sin embargo es inconsistente. 
+
+Por lo tanto, por satisfacibilidad existe $v$ tal que $v\vDash\Gamma$.
+
+Por inconsistencia, existe $\varphi$ tal que $\Gamma \vdash \varphi$ y $\Gamma \nvdash \varphi$.
+
+Por correctitud de SP, $\Gamma\vdash\varphi \Rightarrow \Gamma\vDash\varphi$ y $\Gamma\nvdash\varphi\Rightarrow \Gamma\nvDash\varphi$. 
+
+Luego $\Gamma\vDash\varphi$ y $\Gamma\nvDash\varphi$, y por \'ultimo $v \vDash \varphi$ y $v \nvDash \varphi$. Absurdo!
+
+\end{solution}
+
+\question Demostrar que $\Gamma \cup \{\neg\varphi\}$ es inconsistente si y s\'olo si $\varphi$ es consecuencia sint\'actica de $\Gamma$.
+
+\begin{solution}
+ 
+ \begin{itemize}
+  \item[($\Leftarrow$)] Por propiedad: si $\Gamma\vdash\varphi \Rightarrow \Gamma\cup\{\neg\varphi\}\vdash\varphi$.
+  
+    Por Teorema de la Deducci\'on: $\Gamma\cup\{\neg\varphi\}\vdash\neg\varphi$.
+    
+    Por lo tanto, $\Gamma\cup\{\neg\varphi\}$ es inconsistente.
+  \item[($\Rightarrow$)] Por hip\'otesis: existe $\psi$ tal que $\Gamma\cup\{\neg\varphi\}\vdash\psi$ y $\Gamma\cup\{\neg\varphi\}\vdash\neg\psi$. 
+  
+  Por Teorema de la Deducci\'on: $\Gamma\vdash\neg\varphi\rightarrow\psi$ y $\Gamma\vdash\neg\varphi\rightarrow\neg\psi$. 
+  
+  Se puede ver que: $\vdash(\neg\varphi\rightarrow\psi)\rightarrow((\neg\varphi\rightarrow\neg\psi)\rightarrow\varphi)$. 
+  
+  Por MP 2 veces: $\Gamma\vdash\varphi$.
+ \end{itemize}
+
+\end{solution}
+
+\question Demostrar la correctitud de SP: Si $\varphi$ es teorema de la teor'ia $\Gamma$, es v'alido en toda interpretaci'on de $\Gamma$ ($\Gamma \vdash \varphi \Rightarrow \Gamma \vDash \varphi$). 
+
+\begin{solution}
+
+ Queremos ver que $\Gamma\vdash\varphi \Rightarrow \Gamma\vDash\varphi$. Supongamos que vale el antecedente. Es decir, existe una derivaci\'on $\varphi_1, \dots, \varphi_n$ tal que $\varphi_n=\varphi$ y (a) $\varphi_i$ es un axioma o (b) $\varphi_i\in\Gamma$ o (c) $\varphi_i$ es una consecuencia inmediata de $\varphi_k,\varphi_l, k,l<i$.
+ 
+ Demostramos que $\Gamma\vDash\varphi$ por inducci\'on en $n$ (la longitud de la derivaci\'on):
+ 
+ \begin{center}
+  $P(n)=${\it ``si $\varphi_1, \dots, \varphi_n=\varphi$ es una derivaci\'on de $\varphi$ a partir de $\Gamma$ entonces $v\vDash\Gamma\Rightarrow v\vDash\varphi$''}
+ \end{center}
+
+ \begin{enumerate}[\quad]
+  \item[Caso base ($n=1$):] Supongamos $v$ tal que $v\vDash\Gamma$. Queremos ver que $v\vDash\Gamma\Rightarrow v\vDash\varphi$. Hay 2 posibilidades: o bien $\varphi$ es axioma de SP, o pertenece a $\Gamma$. En ambos casos $v\vDash\varphi$. 
+
+  \item[Paso inductivo:] Supongamos $v$ tal que $v\vDash\Gamma$. Supongamos que vale $P(m)$ para todo $m\leq n$. Qvq vale $P(n+1)$. Supongamos $\varphi_1, \dots, \varphi_n,\varphi_{n+1}=\varphi$ es una derivaci\'on de $\varphi$ a partir de $\Gamma$. Hay 3 posibilidades: 
+  \begin{itemize}
+   \item $\varphi$ es axioma de SP: igual que en caso base. 
+   \item $\varphi\in\Gamma$: igual que en caso base.
+   \item $\varphi$ es consecuencia inmediata de $\varphi_i$ y $\varphi_j=\varphi_i\rightarrow\varphi$ ($i,j,\leq n$). Por HI ($P(i)$ y $P(j)$), sabemos que $v\vDash\varphi_i$ y $v\vDash\varphi_i\rightarrow\varphi$. Entonces necesariamente $v\vDash\varphi$.  
+  \end{itemize}
+
+ \end{enumerate}
+
+\end{solution}
+
+\question (Mat.) Sea {\it Var} el conjunto de variables proposicionales de la l\'ogica proposicional. Probar que si $f : Var \rightarrow \{0,1\}$ es una funci\'on entonces existe una valuaci\'on $v: F \rightarrow \{0,1\}$ que extiende a $f$, donde $F$ es el conjunto de las f\'ormulas de la l\'ogica proposicional. 
+
+\begin{solution}
+ 
+% http://www.cubawiki.com.ar/index.php?title=Final_del_21/10/14_(L%C3%B3gica_y_Computabilidad) 
+
+Hay que probar a) la existencia y b) la unicidad de que existe una \'unica valuaci\'on $v$ que extiende a la funci\'on $f$. 
+
+\begin{enumerate}[a)]
+ \item La existencia se prueba por inducci\'on en la complejidad de la f\'ormula definiendo en cada caso c\'omo se eval\'ua. 
+  
+  \begin{enumerate}[\quad]
+  \item[Caso base:] sea $a$ tal que $comp(a) = 0$, entonces $a$ es una variable proposicional, y por lo tanto $f(a)$ es\'a definida. Vale entonces $v(a) = f(a)$. 
+  
+  \item[Paso inductivo:] supongamos v\'alido $comp(a) = n$, siendo $n$ la complejidad de $a$. Veamos si $comp(a) = n+1$. 
+    
+    \begin{itemize}
+      \item Si $a=\neg b$, entonces $comp(b) = n$. Por H.I., $v(b)$ est\'a definido. Queda que $v(a) = 1 - v(b)$. 
+      
+      \item Si $a=b*c$, con $* \in \{\wedge, \vee, \rightarrow \}$. Entonces $comp(b)$ y $comp(b)$ son menores a $n+1$. Por H.I. $v(b)$ y $v(c)$ est\'an definidos. Por lo tanto: 
+      
+      \begin{eqnarray*}
+      v(a) = \min(v(b), v(c)) & \text{si } a = b \wedge c\\
+      v(a) = \max(v(b), v(c)) & \text{si } a = b \vee c \\
+      v(a) = \max(1-v(b), v(c)) & \text{si } a = b \rightarrow c
+      \end{eqnarray*}
+      
+      La funci\'on $v$ queda definido para toda f\'ormula de cualquier complejidad.
+    \end{itemize}
+  \end{enumerate}
+ \item La unicidad se prueba suponiendo que existiese otra funci\'on de valuaci\'on $w$ que extiende a $f$. 
+ 
+ Consideremos el conjunto $I = \{a\in FORM | v(a) = w(a) \}$. 
+ 
+ Como $w$ tambi\'en extiende a $f$, $I$ contiene a todas las variables proposicionales. Como $v$ y $w$ son ambas valuaciones, $I$ es cerrado por los conectivos por los que $FORM \subseteq I$. Es decir, $v(P) =w(P)$ para toda f\'ormula $P$. 
+ 
+ Usando el teorema de que si un subconjunto $S$ de $A$ es cerrado por los conectivos y $S$ contiene a todas las variables proposicionales entonces $S$ contiene a todas las f\'ormulas. 
+ 
+ (Unicidad basado en el apunte de lógica de Roberto Cignoli y Guillermo Martínez.)
+\end{enumerate}
+
+\end{solution}
+
+\end{questions}

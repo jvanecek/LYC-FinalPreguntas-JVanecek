@@ -1,0 +1,516 @@
+
+\section{Computabilidad}
+
+\begin{questions}
+\question Probar que la clase de funciones computables es una clase PRC.
+\begin{solution}
+  
+  Idea: una clase de funci'on es PRC si est'an las iniciales y el resto se forma por composici'on o recursi'on. Lo que hay que demostrar es que las computables cumplen esto. 
+
+  {\it Demostraci\'on: } Las funciones iniciales son computables, porque
+
+  \begin{itemize}
+  \item $n(x) = 0$ se computa con el programa vac'io. 
+  \item $s(x) = x+1$ se computa con el programa $\{ Y \leftarrow X+1 \}$. 
+  \item $u_i(x_1, \dots, x_n) = x_i$ se computa con el programa $\{ Y \leftarrow X_i \}$. 
+  \end{itemize}
+
+  Falta ver que la clase de funciones computables est'a cerrada por \begin{inparaenum}[(a)] \item composici'on; y \item recursi'on primitiva. \end{inparaenum}
+
+  \begin{enumerate}[(a)]
+  \item Si $h$ se obtiene a partir de las funciones (parciales) computables $f, g_1, \dots, g_k$ por composici'on, entonces $h$ es computable. Y esto es cierto porque el siguiente programa computa $h$: 
+  
+  \vspace{0.5cm}
+  \begin{tabular}{l}
+      $Z_1 \leftarrow g_1(X_1, \dots, X_n)$ \\
+      $\vdots$ \\
+      $Z_k \leftarrow g_k(X_1, \dots, X_n)$ \\
+      $Y \leftarrow f(Z_1, \dots, Z_k)$
+  \end{tabular}
+  \vspace{0.5cm}
+  
+  Y si $f, g_1, \dots, g_k$ son computables, entonces $h$ es computable.
+  
+  \item Si $h$ se obtiene a partir de $g$ por recursi'on primitiva y $g$ es computable entonces $h$ es computable. 
+  
+  En efecto, el siguiente programa computa $h$: 
+  
+  \vspace{0.5cm}
+  \begin{tabular}{rl}
+	  & $Y \leftarrow k$ \\ 
+    $[A]$ & IF $X=0$ GOTO $E$ \\
+	  & $Y \leftarrow g(Z,Y)$ \\
+	  & $Z \leftarrow Z+1$ \\
+	  & $X \leftarrow X-1$ \\
+	  & GOTO $A$
+  \end{tabular}
+  \vspace{0.5cm}
+  
+  Y por lo tanto, si $g$ es computable, $h$ tambi'en. 
+  \end{enumerate}
+\end{solution}
+
+\question Probar que una funci'on es primitiva recursiva si pertenece a toda clase PRC.
+\begin{solution}
+  
+  {\it Demostraci\'on: } Supongamos que existe $f$ p.r. y una clase $C$ PRC. 
+
+  Por definici'on de p.r., $f$ se puee obtener a partir de funciones inciales y por un n'umero finito de aplicaciones de composici'on y recursi'on primitiva. Es decir, que existe una lista de funciones $f_1, f_2, \dots, f_n$ tal que: 
+
+  \begin{itemize}
+  \item $f_i$ o bien es una funci'on inicial (y por lo tanto est'a en $C$) o bien se obtiene por composici'on o recursi'on primitiva a partir de funciones $f_j$, con $j < i$ (y por lo tanto est'a en $C$). 
+  \item $f_n = f$
+  \end{itemize}
+
+  Por consiguiente (o m'as bien por inducci'on), todas las funciones de la lista est'an en $C$. En particular $f_n = f \in C$. 
+\end{solution}
+
+\question Sean $A$ y $B$ dos conjuntos c.e. Demostrar que $A \cup B$ y $A \cap B$ son c.e. ?`Es $A\backslash B$ c.e.?
+\begin{solution}
+  
+  {\it Definici\'on:} Un conjunto $A$ es c.e. cuando existe una funci'on parcial computable $g: \mathbb{N} \rightarrow \mathbb{N}$ tal que: 
+
+  \begin{equation*}
+  A = \{ x : g(x) \downarrow \} = \text{dom}(g)
+  \end{equation*}
+
+  (En otras palabras, podemos decidir algor'itmicamente si un elemento s'i pertenece a $A$, aunque para elementos que no pertenecen a $A$ el algoritmo se indefine)
+
+  {\it Demostraci\'on: $A \cap B$}
+
+  Sean $p$ y $q$ los n'umeros de los programas tales que
+
+  \begin{center}
+  \begin{tabular}{ l r }
+  \(\displaystyle A = \{ x : \Phi_p(x) \} \) & \(\displaystyle B = \{ x : \Phi_q(x) \} \) \\
+  \end{tabular}
+  \end{center}
+
+  Si podemos encontrar un programa que se defina con las mismas entradas que definen a $A$ y $B$, entonces estamos. 
+
+  Sea $R$ el siguiente programa: 
+
+  \vspace{0.5cm}
+  \begin{tabular}{l}
+  $Y \leftarrow \Phi_p(x)$ \\ 
+  $Y \leftarrow \Phi_q(x)$
+  \end{tabular}
+  \vspace{0.5cm}
+
+  Notemos que $\Psi_R(x)\downarrow$ si y solo si $\Phi_p(x)\downarrow$ y $\Phi_q(x)\downarrow$. 
+
+  En efecto, $A\cap B$ es c.e. porque
+
+  \begin{equation*}
+  A\cap B = \{ x : \Psi_R(x)\downarrow \}
+  \end{equation*}
+
+  {\it Demostraci\'on: $A\cup B$}
+
+  Tengo que encontrar un programa que me permita decidir si un elemento pertenece a $A$ o a $B$. 
+
+  Para ello vamos a usar la funci'on $STP^{(n)}(x_1, \dots, x_n, e, t)$ que es $TRUE$ si y solo si el programa con n'umero $e$ termina en $t$ o menos pasos con las entradas $x_1, \dots, x_n$. 
+
+  Definimos $R$ como: 
+
+  \vspace{0.5cm}
+  \begin{tabular}{rl}
+  $[C]$ & IF $STP^{(1)}(X, p, T)$ GOTO $E$ \\
+      & IF $STP^{(1)}(X, q, T)$ GOTO $E$ \\
+      & $T \leftarrow T + 1$ \\
+      & GOTO $C$
+  \end{tabular}
+  \vspace{0.5cm}
+
+  Notemos que este programa chequea \emph{al mismo tiempo} si un elemento pertenece al dominio de $\Phi_p$ o de $\Phi_q$, ejecutando paso a paso los programas $p$ y $q$. 
+
+  En efecto $\Psi_R(x)\downarrow$ si y solo si $\Phi_p(x)\downarrow$ o $\Phi_q(x)\downarrow$: 
+
+  \begin{equation*}
+  A\cup B = \{ x : \Psi_R(x)\downarrow \}
+  \end{equation*}
+
+  {\it Demostraci\'on: $A\backslash B$}
+
+  $A\backslash B$ NO es c.e.. Sea $A$ el conjunto de todos los programas, y $B$ s\'olo de aquellos que paran cuando se les da como entrada su n\'umero de programa. $A\backslash B$ es entonces el conjunto de programas que no se detienen cuando se les da su n\'umero de programa como entrada. 
+  
+  Supongamos que $A\backslash B$ fuera c.e. Pero por definici\'on, un conjunto es c.e. si podemos decidir algor\'itmicamente si un elemento pertenece o no. Es decir que HALT($X,X$) ser\'ia computable. Absurdo!
+  
+\end{solution}
+
+\question Seas $A$ y $B$ conjuntos de una clase PRC $C$. Entonces $A\cup B$, $A\cap B$, y $\bar{A}$ est'an en $C$.
+
+\question Definir conjunto de índices. Enunciar y demostrar el Teorema de Rice.
+\begin{solution}
+  
+  {\it Definici'on:} un conjunto de naturales $A$ es un conjunto de 'indices si existe una clase de funciones $\mathbb{N} \rightarrow \mathbb{N}$ parciales computables $C$ tal que $A = \{ x : \Phi_x \in C \}$. 
+
+  {\it Teorema de Rice:} Si $A$ es un conjunto de 'indices tal que $\emptyset \neq A \neq \mathbb{N}$, $A$ no es computable. 
+
+  {\it Demostraci'on:} Supongamos la clase de funciones $C$ tal que $A = \{ x : \Phi_x \in C \}$ computable. Sea $f \in C$ y $g \neq C$ funciones parciales computables. Sea $h : \mathbb{N}^2 \rightarrow \mathbb{N}$ la siguiente funci'on parcial computable: 
+
+  $$
+  h(t,x) = \left\{
+  \begin{array}{cl}
+  g(x) & \mbox{si } t \in A \\
+  f(x) & \mbox{si no}
+  \end{array}\right.
+  $$
+
+  Por el teorema de la Recursi'on, existe $e$ tal que $\Phi_e(x) = h(e,x)$. Luego, 
+
+  \begin{itemize}
+  \item Si $e\notin A \Rightarrow h(e,x) = f(x)\Rightarrow \Phi_e=h=f\Rightarrow$ como $f\in C, \Phi_e \in C \Rightarrow e \in A$. Absurdo! 
+  \item Si $e\in A \Rightarrow h(e,x) = g(x)\Rightarrow \Phi_e=h=g\Rightarrow$ como $g\notin C, \Phi_e \notin C \Rightarrow e \notin A$. Absurdo! 
+  \end{itemize}
+
+  \end{solution}
+
+  \question Enunciar y demostrar el Teorema de la Recursi'on.
+  \begin{solution}
+  
+  {\it Teorema de la Recursi\'on:} Si $g : \mathbb{N}^{n+1} \rightarrow \mathbb{N}$ es parcial computable, existe un $e$ tal que
+
+  \begin{equation*}
+  \Phi_e(x_1, \dots, x_n) = g(e, x_1, \dots, x_n)
+  \end{equation*}
+
+  {\it Demostraci'on:} Sea $S_n^1$ la funci'on del teorema del Par'ametro, tal que: 
+
+  \begin{equation*}
+  \Phi_y^{(n+1)}(x_1, \dots, x_n, u) = \Phi_{S_n^1(u,y)}^{(n)}(x_1, \dots, x_n)
+  \end{equation*}
+
+  La funci'on $(x_1, \dots, x_n, v) \mapsto g(S_n^1(v,v), x_1, \dots, x_n)$ es parcial computable, de modo que existe $d$ tal que: 
+
+  \begin{eqnarray*}
+  g(S_n^1(v,v), x_1, \dots, x_n) &=& \Phi_d^{(n+1)}(x_1, \dots, x_n, v) \\
+				  &=& \Phi_{S_n^1(v,d)}^{(n)}(x_1, \dots, x_n)
+  \end{eqnarray*}
+
+  Como $d$ est'a fijo, y $v$ es variable, elegimos $v = d$ y $e = S_n^1(d,d)$. Luego
+
+  \begin{eqnarray*}
+  g(S_n^1(v,v), x_1, \dots, x_n) &=& \Phi_{S_n^1(v,v)}^{(n)}(x_1, \dots, x_n) \\
+	    g(e, x_1, \dots, x_n) &=& \Phi_e(x_1, \dots, x_n)
+  \end{eqnarray*}
+\end{solution}
+
+\question Enunciar y demostrar el Teorema de Punto Fijo.
+
+\begin{solution}
+
+ {\it Teorema del Punto Fijo: } Si $f : \mathbb{N}\rightarrow\mathbb{N}$ es computable, existe $e$ tal que $\Phi_{f(e)}=\Phi_e$.
+ 
+ {\it Demostraci\'on: } Considerar la funci\'on $g : \mathbb{N}^2\rightarrow\mathbb{N}$, $g(z,x) = \Phi_{f(z)}(x)$.
+ 
+ Aplicando el Teorema de la Recursi\'on, existe un $e$ tal que para todo $x$, 
+ 
+ \begin{equation*}
+  \Phi_e(x)=g(e,x)=\Phi_{f(e)}(x)
+ \end{equation*}
+
+\end{solution}
+
+\question Enunciar Halt y demostrar que no es computable. (Con cualquiera de las demostraciones vistas.)
+
+\begin{solution}
+
+El problema Halt consiste en tratar de determinar si un programa $P$ con n\'umero de programa $y$, y con entrada $x$ termina. 
+
+Y ello se define con la funci\'on: 
+$$
+HALT(x,y) = \left\{
+\begin{array}{cl}
+1 & \mbox{si } \Phi_y^{(1)}(x)\downarrow \\
+0 & \mbox{si } \Phi_y^{(1)}(x)\uparrow
+\end{array}\right.
+$$
+
+Supongamos que HALT es computable. Construimos el siguiente programa $Q$: 
+
+\begin{tabular}{rl}
+  $[A]$ & IF HALT($X,X$) = 1 GOTO $A$ 
+\end{tabular}
+
+Supongamos que $\#Q=e$. Entonces
+
+$$
+\Phi_e(x) = \left\{
+\begin{array}{cl}
+\uparrow & \mbox{si } HALT(x,x)=1 \\
+0 & \mbox{si no} 
+\end{array}\right.
+$$
+
+Entonces
+
+$$
+\text{HALT}(x,e)=1 \quad\Leftrightarrow\quad \Phi_e(x)\downarrow \quad\Leftrightarrow\quad \text{HALT}(x,x)\neq 1
+$$
+
+Si bien $e$ est\'a fijo, $x$ es variable. Llegamos a un absurdo con $x=e$. 
+\end{solution}
+
+\question Exhibir una función computable que no sea p.r. y demostrarlo.
+
+\begin{solution}
+
+Sea la funci\'on $\tilde{\Phi}_e^{(n)}(x_1,\dots,x_n)$ computable que simula a la $e$-\'esima funci\'on p.r. con entrada $x_1, \dots, x_n$.
+
+Sea $g : \mathbb{N} \rightarrow \mathbb{N}$, definida como $g(x) = \tilde{\Phi}_x^{(1)}(x)$. Demostremos que $g$ es computable pero no p.r.
+
+{\it Demostraci\'on: } Claramente $g$ es computable porque $\tilde{\Phi}$ lo es. 
+
+Supongamos que es p.r. $\Rightarrow f(x) = g(x)+1$ es p.r. por composici\'on $\Rightarrow \exists e$ tal que $\tilde{\Phi}_e = f$ por ser $f$ p.r. $\Rightarrow\tilde{\Phi}_e(x) = \tilde{\Phi}_x(x)+1$.
+
+$e$ est\'a fijo pero $x$ es variable. As\'i que instanciando $x=e$, llegamos a que $\tilde{\Phi}_e(e) = \tilde{\Phi}_e(e)+1$. Absurdo!
+
+\end{solution}
+
+\question (Mat.) Probar que la funci\'on $\tau : \mathrm{N} \rightarrow \mathrm{N}$ que asigna a cada n\'umero natural positivo $n$ el n\'umero de divisores positivos $n$ y $\tau(0)=0$, es una funci\'on recursiva primitiva. 
+
+\begin{solution}
+% http://www.cubawiki.com.ar/index.php?title=Final_del_21/10/14_(L%C3%B3gica_y_Computabilidad) 
+
+Una función es primitiva recursiva si se obtiene a través de las funciones iniciales por composición y/o recursión en finitos pasos.
+
+Sea $f:\mathbb{N}^2 \to \mathbb{N}$ tal que $f(a,b)$ devuelve la cantidad de divisores positivos desde $0$ hasta $b$. Con $a$ y $b$ naturales.
+
+Queremos que $\tau(n) = f(n,n) \forall n \in \mathbb{N}$ definiendo a $f$ de la siguiente forma:
+
+\begin{eqnarray*}
+f(n,0)&=&n(n) \\
+f(n,m+1)&=&g(n,m,f(n,m))
+\end{eqnarray*}
+
+Con 
+
+\begin{equation*}
+g(a,b,c) = \left\{ \begin{matrix} 
+  suc(u^3_3(a,b,c)) & \text{si } P \\ 
+  u^3_3(a,b,c) & \text{si } \neg P 
+\end{matrix} \right.
+\end{equation*}
+
+Donde 
+
+\begin{equation*}
+ P = u^3_1(a,b,c) \mid suc(u^3_2(a,b,c))
+\end{equation*}
+
+Veamos que: 
+
+\begin{enumerate}[A)]
+ \setlength\itemsep{0em}
+  \item $f$ cumple con el esquema de recursión primitivo.
+  \item $n(n)$ es la función inicial nula aplicada a $n$.
+  \item El predicado $P$ usa la función proyección y la función ``divide a'' ($\mid$) que es primitiva recursiva.
+  \item La función $g$ es una división de casos disjuntos y usa las funciones iniciales de proyección y sucesor.
+\end{enumerate}
+
+Por todo lo anterior, la función $f(n,m)$ es primitiva recursiva (con $n$ y $m$ naturales).
+
+Falta ver que $\tau (n) = f(n,n)$. Probamos por inducción en el segundo parámetro.
+
+\begin{itemize}
+ \item Caso base: 
+ 
+ $\tau(0) = 0$
+ 
+ $f(0,0) = n(0) = 0$ 
+ 
+ \item Paso inductivo: 
+ 
+ Se cumple la hipótesis inductiva $f(n,m)$ devuelve los divisiores de $n$ desde $0$ hasta $m$. Ahora queremos ver para $m+1$: $f(n,m+1) = g(n,m,f(n,m))$. Abrimos los dos casos seg\'un el dominio de $g$: 
+ 
+  \begin{enumerate}[1.]
+   \item Caso $n \mid (m+1)$: $g(n,m,f(n,m)) = f(n,m)+1$. 
+   
+    Entonces por H.I. al dividir $m+1$ incremento en 1 a lo ya calculado en el paso recursivo anterior y éste calculo correctamente hasta $m$. Queda $f(n,m+1)=f(n,m)+1$.
+    
+   \item Caso $\neg (n \mid (m+1))$: $g(n,m,f(n,m)) = f(n,m)$. 
+   
+    Entonces por H.I. al no dividir $m+1$ no sumo nada a lo ya calculado en el paso recursivo anterior y éste calcula correctamente hasta $m$. Queda $f(n,m+1)=f(n,m)$.
+  \end{enumerate}
+
+ Por lo tanto, $\tau(n) = f(n,n) \forall n \in \mathbb{N}$.
+ 
+\end{itemize}
+
+\end{solution} 
+
+\question (Mat.) Dar un ejemplo de una funci\'on no computable de una variable tal que la imagen tenga tres elementos. 
+
+\begin{solution}
+Sea $f$: 
+
+$$
+f(x) = \left\{
+\begin{array}{cl}
+Halt(x,x) & \mbox{si } x \neq 0 \\
+2 & \mbox{si } x = 0
+\end{array}\right.
+$$
+
+La $Img(f) = \{0,1,2\}$. Tiene exactamente 3 elementos.
+
+Supongamos que $f$ es computable, entonces $\exists P$ programa que computa $f$. 
+
+Si $f(x) = 2$, entonces $x = 0$. 
+
+Si $f(x) = 0 (Halt(x,x))$ o $f(x) = 1 (\neg Halt(x,x))$, si y s\'olo si $\varphi_P(x)\downarrow$.
+
+Sea $e = \#P$. Tomemos el caso particular: $x = e$. $H(e,e)$ determina si el programa $e$ con entrada $e$ termina o no. 
+
+Como vimos en las te\'oricas, $f$ est\'a resolviendo {\it halting problem}. Absurdo! pues {\it Halt} no es computable. Vino de suponer que $f(x)$ es computable. 
+
+Entonces $f(x)$ no es computable. 
+
+\end{solution}
+
+\question Probar que TOT no es c.e. ni co-c.e.
+
+\begin{solution}
+
+ {\it Def. } TOT$=\{ e : \Phi_e(x)$ es total$\}$, y $\Phi_e$ es total sii $(\forall x)\Phi_e(x)\downarrow$.
+ 
+ {\it Def. } Un conjunto $A$ es computablemente enumerable si y s\'olo si existe una funci\'on $g$ parcialmente computable, $g: \mathbb{N} \rightarrow \mathbb{N}$ tal que $A = \{x : g(x)\downarrow \} = \text{Dom}(g)$.
+
+ {\it Def. } Un conjunto $A$ es co-c.e. sii $\overline{A}$ es c.e.
+ 
+ {\it Demostraci\'on: } TOT no c.e.
+ 
+ Supongamos que es c.e. $\Rightarrow \exists g$ parcial computable tal que TOT=Dom($g$).
+ 
+ Existe adem\'as $e$, tal que $\Phi_e(x)=\Phi_{g(x)}(x)+1$. Notar que esto se define para todo $x$. Luego $\Phi_e$ es total $\Rightarrow e\in$TOT$\Rightarrow \exists u : g(u)=e \Rightarrow \Phi_{g(u)}(x)=\Phi_{g(u)}(x)+1$. 
+ 
+ Absurdo si $x=u$, y esto vino de suponer que TOT es c.e.
+ 
+ {\it Demostraci\'on: } TOT no co-c.e.
+ 
+ Supongamos que $\overline{\text{TOT}}$ c.e., existe entonces $d$ tal que $\overline{\text{TOT}}=$Dom($\Phi_d$). 
+ 
+ Definimos el siguiente programa $P$: 
+ 
+ \vspace{0.5cm}
+  \begin{tabular}{rl}
+    $[C]$ & IF STP$^{(1)}(X,d,T)=1$ GOTO $E$ \\
+	  & $T\leftarrow T+1$\\
+	  & GOTO $C$
+  \end{tabular}
+ \vspace{0.5cm}
+ 
+ Tenemos
+ \begin{equation*}
+    \Psi_P(x,d) = g(x,d) = \left\{ \begin{matrix} 
+      \uparrow & \text{si } \Phi_d \text{ es total} \\ 
+      0 & \text{si no}
+    \end{matrix} \right.
+  \end{equation*}
+ Por el Teorema de la Recursi\'on: sea $e$ tal que $\Phi_e(x)=g(x,e)$. 
+ 
+ \begin{itemize}
+  \item $\Phi_e$ es total $\Rightarrow g(e,d)\uparrow\text{ para todo } y \Rightarrow \Phi_e(x)\uparrow \text{ para todo } x\Rightarrow \Phi_e$ no es total.
+  \item $\Phi_e$ no es total $\Rightarrow g(e,d)=0 \text{ para todo } y \Rightarrow \Phi_e(x)=0 \text{ para todo } x \Rightarrow \Phi_e$ es total. 
+ \end{itemize}
+
+\end{solution}
+
+\question Probar que todo conjunto r.e. infinito contiene un conjunto recursivo infinito. 
+
+\begin{solution}
+ 
+ {\it Def. } Un conjunto $A$ es recursivamente enumerable si y s\'olo si existe una funci\'on $f$ computable, $f: \mathbb{N} \rightarrow \mathbb{N}$ tal que $A = \{x : f(x)\downarrow \} = \text{Dom}(f)$.
+ 
+ {\it Demostraci\'on: } Primero probamos que si $B = \{ f(n) : n \in \mathbb{N} \}$, con $f$ una funci\'on estrictamente creciente, parcialmente computable y total, entonces $B$ es recursivo. Para verlo, basta ver el siguiente programa: 
+
+ \vspace{0.5cm}
+  \begin{tabular}{rl}
+    $[A]$ & IF $f(Z)=X$ GOTO $B$ \\
+	  & IF $f(Z)>X$ GOTO $E$ \\ 
+	  & $Z\leftarrow Z+1$\\
+	  & GOTO $A$\\
+    $[B]$ & $Y\leftarrow 1$ \\
+	  & GOTO $E$
+  \end{tabular}
+ \vspace{0.5cm}
+ 
+ computa $\Psi_B$. Este programa termina siempre, as\'i que $B$ es recursivo. 
+ 
+ Ahora, sea $A$ r.e. e infinito. Tenemos una funci\'on p.r. $g$ que nos va dando los elementos de $A$. 
+ 
+ Definimos $f(0) = g(0)$ y suponiendo definida $f(k)$ para todo $k<n$, definimos $f(n) = g(\min_z(g(z)>f(n-1)))$.
+ 
+ Esta minimizaci\'on es propia, pues $A$ es infinito. Entonces, siempre podemos encontrar un elemento $A$ mayor que todos los que tengamos. Esto nos da una $f$ parcialmente computable, total, y estrictamente creciente. Si tomamos $B=\{f(n) : n \in \mathbb{N}\}$, tenemos que $B$ es recursivo y que $B\subseteq A$. 
+\end{solution}
+
+\question Probar que si $A$ es computable entonces es c.e. ?`Vale la vuelta? Justificar.
+
+\begin{solution}
+ Sea $P_A$ un programa para [la funci\'on caracter\'istica de] $A$. 
+ 
+ Consideremos el siguiente programa $P$: 
+ 
+ \vspace{0.5cm}
+  \begin{tabular}{rl}
+    $[C]$ & IF $P_A(X)=0$ GOTO $C$ \\
+  \end{tabular}
+ \vspace{0.5cm}
+ 
+ Tenemos que: 
+ 
+  \begin{equation*}
+    \Psi_A(x) = \left\{ \begin{matrix} 
+      0 & \text{si } x\in A \\ 
+      \uparrow & \text{si no}
+    \end{matrix} \right.
+  \end{equation*}
+
+ Y por lo tanto $A = \{x : \Psi_P(X)\downarrow\}$. 
+ 
+ La vuelta no es cierta. Lo demostramos con un contraejemplo. 
+ 
+ Definimos $W_n=\{ x : \Phi_n(x)\} = $ el dominio del $n$-\'esimo programa, y a $K=\{n : n\in W_n\}$. Observemos que $n\in W_n$ sii $\Phi_n(n)\downarrow$ sii HALT($n,n$). $K$ es (a) c.e. pero (b) no computable. 
+ 
+ \begin{enumerate}[(a)]
+ \item $K$ es c.e. porque $K=\{x : g(n)\downarrow\}$
+ \item Supongamos que $K$ fuera computable. Entonces $\overline{K}$ tambi\'en lo ser\'ia. Luego existe un $e$ tal que $\overline{K}=W_e$. Por lo tanto
+ \begin{equation*}
+  e \in K \Leftrightarrow e \in W_e \Leftrightarrow e\in \overline{K}
+ \end{equation*}
+
+ \end{enumerate}
+
+\end{solution}
+
+\question Probar que un conjunto $A\subseteq \mathbb{N}$ es computable sii $A$ y $\overline{A}$ son c.e.
+
+\begin{solution}
+\begin{itemize}
+ \item[$\Rightarrow$)] Si $A$ es computable entonces $\overline{A}$ es computable. 
+ 
+ \item[$\Leftarrow$)] Supongamos que $A$ y $\overline{A}$ son c.e.
+ 
+ \begin{equation*}
+  A = \{x : \Phi_p(x)\downarrow \} \quad \overline{A} = \{x : \Phi_q(x)\downarrow \}
+ \end{equation*}
+ 
+ Consideremos el programa $P$: 
+ 
+  \vspace{0.5cm}
+  \begin{tabular}{rl}
+    $[C]$ & IF STP$^{(1)}(X,p,T) = 1$ GOTO $F$ \\
+	  & IF STP$^{(1)}(X,q,T) = 1$ GOTO $E$ \\
+	  & $T\leftarrow T+1$ \\
+	  & GOTO $C$ \\
+    $[F]$ & $Y\leftarrow 1$ \\
+  \end{tabular}
+  \vspace{0.5cm}
+
+  Para cada $x$, vale que $x\in A$ o bien $a\in\overline{A}$. Entonces $\Psi_P$ computa $A$. 
+\end{itemize}
+
+\end{solution}
+
+\end{questions}

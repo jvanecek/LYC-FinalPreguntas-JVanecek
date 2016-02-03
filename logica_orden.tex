@@ -1,0 +1,151 @@
+\section{L'ogica de primer orden} 
+\begin{questions}
+
+\question Demostrar que si $\Gamma$ (teor'ia de primer orden) tiene modelos arbitrariamente grandes, tiene un modelo infinito. 
+
+\begin{solution}
+ Definimos (en el lenguaje con s\'olo la igualdad): 
+ 
+ \begin{equation*}
+  \varphi_i = \text{``hay al menos $i$ elementos''} \quad \forall i \geq 2
+ \end{equation*}
+
+ Por hip\'otesis, todo subconjunto finito $\Gamma\cup\{\varphi_i | i\geq2\}$ tiene modelo. 
+ 
+ Por Compacidad, $\Gamma\cup\{\varphi_i | i \geq 2\}$ tiene alg\'un modelo $\mathcal{M}$.
+ 
+ Por lo tanto, $\mathcal{M}$ tiene que ser infinito. 
+\end{solution}
+
+\question Dado L un lenguaje de primer orden con igualdad. Decidir si las siguientes afirmaciones son verdaderas o falsas. 
+
+\begin{enumerate}
+  \item[a)] Existe un conjunto $\Gamma$ tal que $\Gamma \models$ A sii A tiene universo infinito. [Otra version: Existe $\Gamma$ tal que A es modelo de $\Gamma$ sii A es un modelo infinito.]
+  
+  \item[b)] Existe un conjunto $\Gamma$ tal que $\Gamma \models$ A sii A tiene universo finito. [Otra version: Existe $\Gamma$ tal que A es modelo de $\Gamma$ sii A es un modelo finito.]
+  
+  \item[c)] El conjunto $\Gamma$ del ítem 1 necesariamente es infinito.
+\end{enumerate}
+
+\question Dar un conjunto de f\'ormulas $\Gamma$ tal que $\Gamma$ es v\'alida si y s\'olo si el modelo que la satisface es infinito. ?`Existe una f\'ormula $\varphi$ tal que $\varphi$ es v\'alida si y s\'olo si el modelo que la satisface es finitio??`Por qu\'e?
+
+\question Sea $\mathcal{L} = \{ 0, S, <, +, \cdot \}$ con igualdad y sea $\mathcal{N} = \langle \mathcal{N}; 0, S, <, +, \cdot \rangle$ una $\mathcal{L}$-estructura de primer orden con la interpretación usual. Mostrar que existe un modelo de $\mathcal{N}$ en donde valen todas las verdades de $\mathcal{N}$ pero en donde existe un elemento inalcanzable (desde el 0, usando la función sucesor $S$). \label{modelo-no-estandar}
+
+\begin{solution}
+
+ Sea:
+ \begin{eqnarray*}
+ \text{el lenguaje }\mathcal{L}&=&\{0,S,<,+,\cdotp\} \text{ con igualdad}\\
+ \text{la estructura }\mathcal{N}&=&\langle\mathbb{N};0,S,<,+,\cdotp\rangle \text{ con la interpretaci\'on usual}\\
+ \text{Teo}(\mathcal{L})&=&\{\varphi\in\text{FORM}(\mathcal{L}) : \varphi\text{ es sentencia y }\mathcal{L}\vDash\varphi\}
+ \end{eqnarray*}
+
+ Expandimos el lenguaje con una nueva constante $c$ y definimos: 
+ \begin{equation*}
+  \Gamma = \{0 < c, S(0)<c, S(S(0))<c, S(S(S(0)))<c, \dots\}
+ \end{equation*}
+
+  Para $\Gamma\cup$Teo($\mathcal{N}$), cada subconjunto finitio tiene modelo; por compacidad tiene modelo; y por Lowenheim-Skolem tiene un modelo numerable: 
+  \begin{equation*}
+   \mathcal{M} = \langle M;0^\mathcal{M}, S^\mathcal{M},<^\mathcal{M},+^\mathcal{M},\cdotp^\mathcal{M},c^\mathcal{M}\rangle
+  \end{equation*}
+  
+  Sea $\mathcal{M}'$ la restricci\'on de $\mathcal{M}$ al lenguaje original $\mathcal{L}$. Veamos que $\mathcal{N}\vDash\varphi$ sii $\mathcal{M}'\vDash\varphi$ para toda sentencia $\varphi\in$FORM($\mathcal{L}$): 
+  
+  \begin{itemize}
+   \item $\mathcal{N}\vDash\varphi \Rightarrow \varphi\in\text{Teo}(\mathcal{N}) \Rightarrow \mathcal{M}\vDash\varphi \Rightarrow \mathcal{M}'\vDash\varphi$.
+   \item $\mathcal{N}\nvDash\varphi \Rightarrow \neg\varphi\in\text{Teo}(\mathcal{N}) \Rightarrow \mathcal{M}\vDash\neg\varphi \Rightarrow \mathcal{M}'\nvDash\varphi$.
+  \end{itemize}
+  
+  $\mathcal{N}$ y $\mathcal{M}$ no son isomorfos: $c^\mathcal{M}$ es inalcanzable en $\mathcal{M}'$.
+
+\end{solution}
+
+\question Probar que existen modelos no est\'andar de la aritm\'etica en los que hay un elemento inalcanzable. 
+
+\begin{solution} 
+Vale la respuesta de la pregunta \ref{modelo-no-estandar}.
+\end{solution}
+
+\question Mostrar un modelo no est'andar de los naturales. 
+
+\begin{solution} 
+Vale la respuesta de la pregunta \ref{modelo-no-estandar}.
+\end{solution}
+
+\question Verdadero o Falso (Justificar):
+  \begin{equation*}
+    \exists M \vDash \varphi \Leftrightarrow M \text{ es infinito.}
+  \end{equation*}
+
+\question Enumerar (y explicar muy brevemente) los pasos de la demostraci\'on de completitud en Primer Orden y mostrar el modelo can\'onico utilizado en la demostraci\'on.
+
+\begin{solution}
+
+ {\it Teorema de Completitud: } Si $\Gamma\vDash\varphi$ entonces $\Gamma\vdash\varphi$.
+ 
+ {\it Demostraci\'on: } Sea $\mathcal{L}$ un lenguaje fijo. Sea $\Gamma\subseteq$FORM($\mathcal{L}$) consistente. Queremos construir un modelo can\'onico $\mathcal{B}$ y una valuaci\'on $v$ de $\mathcal{B}$ tal que: 
+ 
+ \begin{equation*}
+  \mathcal{B}\vDash\varphi[v] \quad\forall\varphi\in\Gamma
+ \end{equation*}
+
+ Para ello: 
+ \begin{enumerate}
+  \item Se expande $\mathcal{L}$ a $\mathcal{L}'$ con nuevas constantes $\mathcal{C}$ que no aparecen en $\mathcal{L}$. $\Gamma$ sigue siendo consistente bajo $\mathcal{L}'$. 
+  \item Se agrega un conjunto $\Theta\subseteq$FORM($\mathcal{L}'$) de testigos a $\Gamma$. $\Gamma\cup\Theta$ sigue siendo consistente. 
+  \item Se aplica Lindenbaum para $\Gamma\cup\Theta$ y se obtiene $\Delta\supseteq\Gamma\cup\Theta$ maximal consistente.
+  \item Se construye el modelo can\'onico $\mathcal{A}$ y valuaci\'on $v$ (para el lenguaje $\mathcal{L}'$) tal que $\mathcal{A}\vDash\varphi[v]$ sii $\varphi\in\Delta$, para toda $\varphi\in$FORM($\mathcal{L}'$).
+  \item Se define $\mathcal{B}$ como la restricci\'on de $\mathcal{A}$ a $\mathcal{L}$, concluyendo que $\Gamma$ es satisfacible. 
+ \end{enumerate}
+
+\end{solution}
+
+
+\question Sea $\mathcal{L} = \{c, f\}$ un lenguaje de primer orden con igualdad donde $c$ es un s'imbolo de constante y $f$ un s'imbolo de funci'on unaria. 
+
+\begin{enumerate}
+ \item Definir $\varphi, \psi \in $FORM($\mathcal{L}$) tal que: 
+ 
+ \begin{itemize}
+  \item $\varphi$ sea verdadera sii $c$ no pertenece al rango de $f$. 
+  \item $\psi$ sea verdadera sii $f$ es inyectiva. 
+ \end{itemize}
+
+ \item Para $\theta = (\varphi \wedge \psi)$, probar que si $A\vDash\theta$ entonces $A$ es infinito. 
+ 
+ \item Definir $\theta'\in$ FORM($\mathcal{L}$) tal que si $A$ es infinito entonces $A\vDash \theta'$. 
+ 
+ \item ?`Existe $\theta'' \in$ FORM($\mathcal{L}$) tal que $A$ es infinito sii $A\vDash\theta''$? Justificar. 
+\end{enumerate}
+
+\question (Mat.) 
+\begin{enumerate}[a)]
+  \item Definir el concepto de interpretaci\'on de un lenguaje de primer orden. 
+  \item Sea $\mathcal{L}$ un lenguaje de igualdad y un s\'imbolo de funci\'on binario $f^2$. Encontrar un enunciado en este lenguaje que exprese que una operaci\'on binaria es conmutativa y asociativa. 
+\end{enumerate}
+
+\begin{solution}
+% http://www.cubawiki.com.ar/index.php?title=Final_del_21/10/14_(L%C3%B3gica_y_Computabilidad) 
+ 
+ \begin{enumerate}[a)]
+  \item  La interpretación de un lenguaje de primer orden es una extensión del lenguaje que mapea cada símbolo constante, función $k$-aria y predicado $k$-ario a algún elemento del universo de interpretación.
+  
+  Sea un lenguaje $L=< C,F,P>$ para una interpretaci\'on se define: 
+  \begin{itemize}
+   \item Un universo de interpretaci\'on, conjunto no nulo $U_I$. Ejemplo: Naturales. 
+   \item Para cada s\'imbolo constante $c\in C$, mapea con un elemento $c_I \in C_I$. 
+   \item Para cada s\'imbolo de funci\'on $k$-aria$\in F$, mapea con una funci\'on $f_I$ de $k$ variables sobre el universo $U_I$, $f_I : U_I^k \rightarrow U_I$. 
+   \item Para cada s\'imbolo de predicado $k$-ario$\in P$, mapea a una relaci\'on $k$-aria $P_I$ sobre el universo $U_I$. 
+  \end{itemize}
+  
+  \item Conmutativo: $a = \forall x \forall y(f^2(x,y)=f^2(y,x))$
+  
+  Asociativo: $b=\forall x\forall y\forall z(f^2(x,f^2(y,z)) = f^2(f^2(x,y),z))$.
+  
+  La soluci\'on es $a\wedge b$. 
+ \end{enumerate}
+
+\end{solution}
+
+\end{questions}
