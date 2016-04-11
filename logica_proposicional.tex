@@ -2,15 +2,6 @@
 
 \begin{questions}
 
-\question Definir consistente, maximal consistente, y demostrar que $\varphi$ es teorema de $\Gamma$ si y s\'olo si $\varphi$ pertenece a $\Gamma$. 
-
-\begin{solution}
-
- {\it Def. } Un conjunto $\Gamma\subseteq$FORM es consistente si no existe $\varphi\in$FORM tal que $\Gamma\vdash\varphi$ y $\Gamma\nvdash\varphi$.
- 
- {\it Def. } Un conjunto $\Gamma\subseteq$FORM es maximal consistente en SP si es consistente y para toda f\'ormula $\varphi$, $\varphi\in\Gamma$ o existe $\psi$ tal que $\Gamma\cup\{\varphi\}\vdash\psi$ y $\Gamma\cup\{\varphi\}\nvdash\psi$.
-\end{solution}
-
 \question Definir conjunto maximal consistente y probar que si $\Gamma$ es m.c. entonces: 
 
 \begin{enumerate}[a)]
@@ -19,8 +10,13 @@
 \end{enumerate}
 
 \begin{solution}
+
+ {\it Def. } Un conjunto $\Gamma\subseteq$FORM es consistente si no existe $\varphi\in$FORM tal que $\Gamma\vdash\varphi$ y $\Gamma\nvdash\varphi$.
+ 
+ {\it Def. } Un conjunto $\Gamma\subseteq$FORM es maximal consistente en SP si es consistente y para toda f\'ormula $\varphi$, $\varphi\in\Gamma$ o existe $\psi$ tal que $\Gamma\cup\{\varphi\}\vdash\psi$ y $\Gamma\cup\{\varphi\}\nvdash\psi$.
+
  \begin{enumerate}[a)]
-  \item No puede ser que $\varphi$ y $\neg\varphi$ est\'en en $\Gamma$ porque ser\'ia inconsistente.
+  \item No puede ser que $\varphi$ y $\neg\varphi$ est\'en en $\Gamma$ porque por punto b) ser\'ia inconsistente.
   
   Supongamos que ninguna est\'a. Como $\Gamma$ es maximal y por proposici\'on ($\Gamma\cup\{\neg\varphi\}$ es inconsistente sii $\Gamma\vdash\varphi$): 
   
@@ -29,7 +25,23 @@
    \item $\Gamma\cup\{\neg\varphi\}$ es inconsistente $\Rightarrow \Gamma\vdash\varphi$
   \end{itemize}
 
-  Luego $\Gamma$ es inconsistente. 
+  Luego $\Gamma$ es inconsistente.
+  
+  \item Probar $\varphi\in\Gamma$ sii $\Gamma\vdash\varphi$. 
+  
+  \begin{itemize}
+   \item[$\Rightarrow$)] Trivial porque o bien $\varphi$ es axioma o consecuencia inmediata de $\Gamma$ y por lo tanto $\forall v, v\vDash\varphi$. 
+   \item[$\Leftarrow$)] Por el absurdo, asumimos que $\Gamma\vdash\varphi$ y $\varphi\notin\Gamma$. Por maximalidad, $\Gamma\cup\{\varphi\}$ es inconsistente, y por lo tanto existe $\beta$ tal que:
+   
+   \begin{enumerate}[1.]
+    \item $\Gamma\cup\{\varphi\}\vdash\beta$ y $\Gamma\cup\{\varphi\}\nvdash\beta$
+    \item Por deducci\'on: $\Gamma\vdash\varphi\rightarrow\beta$ y $\Gamma\vdash\varphi\rightarrow\neg\beta$
+    \item Por MP: $\Gamma\vdash\beta$ y $\Gamma\nvdash\beta$.
+   \end{enumerate} 
+   
+   Por consiguiente, $\Gamma$ es inconsistente. Absurdo!
+  \end{itemize}
+
  \end{enumerate}
 
 \end{solution}
@@ -38,11 +50,11 @@
 \question Enunciar y demostrar el Lema de Lindenbaum para la l'ogica proposicional.
 \begin{solution}
 
-{\it Lema de Lindenbaum:} Si $\Gamma \subseteq$ FORM es consistente, existe $\Gamma'$ maximal consistente tal que $\Gamma \subseteq \Gamma'$
+{\it Lema de Lindenbaum:} Si $\Gamma \subseteq$ FORM es consistente, existe $\Delta$ maximal consistente tal que $\Gamma \subseteq \Delta$
 
 {\it Demostraci\'on: }
 
-Hay que encontrar el $\Gamma'$ tal que es m.c. y contiene a $\Gamma$. 
+Hay que encontrar el $\Delta$ tal que es m.c. y contiene a $\Gamma$. 
 
 Enumeremos todas las f'ormulas $\varphi_1, \varphi_2, \dots$ y definimos: 
 
@@ -55,12 +67,14 @@ $$\Gamma_i = \left\{
   \right.
   $$
 
-Luego definimos $\Gamma' = \bigcup_{i\geq 0} \Gamma_i$. Y terminamos. $\Gamma'$ es \begin{inparaenum}[(a)] \item consistente, \item maximal y \item contiene a $\Gamma$ \end{inparaenum} como quer'iamos.
+Luego definimos $\Delta = \bigcup_{i\geq 0} \Gamma_i$. Y terminamos. $\Delta$ es \begin{inparaenum}[(a)] \item consistente, \item maximal y \item contiene a $\Gamma$ \end{inparaenum} como quer'iamos.
 
 \begin{enumerate}[(a)]
- \item Si no fuera consistente, existir'ia $\psi$ tal que: $\Gamma' \vdash \psi$ y $\Gamma' \nvdash \psi$. En ambas derivaciones aparece \'unicamente $\{ \gamma_1, \dots, \gamma_k \} \subseteq \Gamma'$. Sea $j$ el m'inimo 'indice tal que $\{ \gamma_1, \dots, \gamma_k \} \subseteq \Gamma_j$. Entonces $\Gamma_j$ es inconsistente, y esto es absurdo por que $\Gamma'$ se construye de $\Gamma_i$ consistentes. 
+ \item Si no fuera consistente, existir'ia $\psi$ tal que: $\Delta \vdash \psi$ y $\Delta \nvdash \psi$. En ambas derivaciones aparece \'unicamente $\{ \gamma_1, \dots, \gamma_k \} \subseteq \Delta$. Sea $j$ el m'inimo 'indice tal que $\{ \gamma_1, \dots, \gamma_k \} \subseteq \Gamma_j$. Entonces $\Gamma_j$ es inconsistente, y esto es absurdo porque se construye de $\Gamma_i$ consistentes. 
  
- \item Es maximal, porque supongamos un $\varphi \notin \Gamma'$. Debe existir un $n$ tal que $\varphi_n = \varphi$. Y como $\varphi_n \notin \Gamma_n$ (porque sino estar'ia en $\Gamma'$), entonces $\Gamma_{n-1} \cup \{ \varphi_n \}$ es inconsistente. Luego $\Gamma' \cup \{ \varphi_n \}$ es inconsistente. 
+ \item Es maximal. Supongamos que no: existe $\varphi \notin \Delta$, tal que $\Delta\cup\{\varphi\}$ es consistente. Debe existir un $n$ tal que $\varphi_n = \varphi$. Y como $\varphi_n \notin \Gamma_n$ (porque sino estar'ia en $\Delta$), entonces $\Gamma_{n-1} \cup \{ \varphi_n \}$ es inconsistente. Luego $\Delta \cup \{ \varphi_n \}$ es inconsistente. Absurdo! 
+ 
+ \item $\Gamma = \Gamma_0 \subseteq \Delta$.
 \end{enumerate}
 
 \end{solution}
@@ -79,37 +93,42 @@ Luego definimos $\Gamma' = \bigcup_{i\geq 0} \Gamma_i$. Y terminamos. $\Gamma'$ 
  \begin{itemize}[\quad]
   \item[Caso base ($n=1$):] la derivaci\'on es una s\'ola f\'ormula ($\varphi_1=\psi$). Queremos ver que $\Gamma\vdash\varphi\rightarrow\psi$. Hay 3 posibilidades: 
   \begin{enumerate}[a)]
-   \item $\psi$ es un axioma de SP. Usando el mecanismo deductivo: 
-    \begin{enumerate}[1.]
-      \item $\psi$ (por ser axioma)
-      \item $\psi\rightarrow(\varphi\rightarrow\psi)$  (por SP1)
-      \item $\psi\rightarrow\varphi$ (por MP 1,2)
+   \item $\psi$ es un axioma de SP. 
+    \begin{enumerate}
+      \item[$\Rightarrow$] $\vdash\psi$ \hfill (Por ser axioma) 
+      \item[$\Rightarrow$] $\vdash\psi\rightarrow(\varphi\rightarrow\psi)$ \hfill (por SP1)
+      \item[$\Rightarrow$] $\vdash\varphi\rightarrow\psi$ \hfill (por MP 1,2) 
     \end{enumerate}
     
    \item $\psi\in\Gamma$
-   \begin{enumerate}[1.]
-      \item $\psi$ (por $\psi\in\Gamma$)
-      \item $\psi\rightarrow(\varphi\rightarrow\psi)$  (por SP1)
-      \item $\psi\rightarrow\varphi$ (por MP 1,2)
+   \begin{enumerate}
+      \item[$\Rightarrow$] $\Gamma\vdash\psi$ \hfill (por $\psi\in\Gamma$)
+      \item[$\Rightarrow$] $\Gamma\vdash\psi\rightarrow(\varphi\rightarrow\psi)$ \hfill (por SP1)
+      \item[$\Rightarrow$] $\Gamma\vdash\varphi\rightarrow\psi$ \hfill (por MP 1,2)
     \end{enumerate}
     
    \item $\psi=\varphi$. 
-    Vale porque $\varphi\rightarrow\varphi$ (visto en clase)
+    Vale porque $\vdash\varphi\rightarrow\varphi$ (visto en clase)
   \end{enumerate}
 
-  \item[Paso inductivo:] HI: {\it ``para toda derivaci\'on $\psi'$ a partir de $\Gamma\cup\{\varphi\}$ de longitud menor a $n$ vale $\Gamma\vdash\varphi\rightarrow\psi$''}. Queremos ver que $\Gamma\vdash\varphi\rightarrow\psi$. Hay 4 posibilidades: 
+  \item[Paso inductivo:] HI: {\it ``para toda derivaci\'on $\psi'$ a partir de $\Gamma\cup\{\varphi\}$ de longitud menor a $n$ vale $\Gamma\vdash\varphi\rightarrow\psi'$''}. Queremos ver que $\Gamma\vdash\varphi\rightarrow\psi$. 
+  
+  Hay 4 posibilidades: 
   \begin{enumerate}[a)]
    \item $\psi$ es un axioma de SP: igual que caso base. 
    \item $\psi\in\Gamma$: igual que en caso base. 
    \item $\psi=\varphi$: igual que en caso base. 
-   \item $\psi$ se infiere por MP de $\varphi_i$ y $\varphi_j$ ($i,j<n$): 
-   \begin{enumerate}[1.]
-    \item Sin p\'erdida de generalidad: $\varphi_j=\varphi_i\rightarrow\psi$. 
-    \item $\Gamma\cup\{\varphi\}\vdash\varphi_i$ y la derivaci\'on tiene longitud menor a $n$. Por HI: $\Gamma\vdash\varphi\rightarrow\varphi_i$
-    \item $\Gamma\cup\{\varphi\}\vdash\varphi_j$ y la derivaci\'on tiene longitud menor a $n$. Por HI: $\Gamma\vdash\varphi\rightarrow\varphi_j$ (i.e. $\Gamma\vdash\varphi\rightarrow(\varphi_j\rightarrow\psi)$.
-    \item (Por SP2) $\vdash (\varphi\rightarrow(\varphi_i\rightarrow\psi))\rightarrow((\varphi\rightarrow\varphi_i)\rightarrow(\varphi\rightarrow\psi))$.
-    \item (Por MP 2 veces) $\Gamma\vdash\varphi\rightarrow\psi$.
-   \end{enumerate}
+   \item $\psi$ se infiere por MP de $\varphi_i$ y $\varphi_j$ ($i,j<n$). Sin p\'erdida de generalidad: $\varphi_j=\varphi_i\rightarrow\psi$. 
+   
+    Por HI {\it ``$\Gamma\cup\{\varphi\}\vdash\varphi_i$ y la derivaci\'on tiene longitud menor a $n$''} vale: $\Gamma\vdash\varphi\rightarrow\varphi_i$
+    
+    Por HI {\it ``$\Gamma\cup\{\varphi\}\vdash\varphi_j$ y la derivaci\'on tiene longitud menor a $n$''} vale: $\Gamma\vdash\varphi\rightarrow\varphi_j\Rightarrow$
+    
+    \hfill $\Gamma\vdash\varphi\rightarrow(\varphi_i\rightarrow\psi)$.
+    
+    Por SP2 vale: $\vdash (\varphi\rightarrow(\varphi_i\rightarrow\psi))\rightarrow((\varphi\rightarrow\varphi_i)\rightarrow(\varphi\rightarrow\psi))$.
+    
+    Por MP 2 veces: $\Gamma\vdash\varphi\rightarrow\psi$.
   \end{enumerate}
 
  \end{itemize}

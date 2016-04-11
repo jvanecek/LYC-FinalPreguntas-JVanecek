@@ -50,19 +50,32 @@
   \end{enumerate}
 \end{solution}
 
-\question Probar que una funci'on es primitiva recursiva si pertenece a toda clase PRC.
+\question Probar que una funci'on es primitiva recursiva sii pertenece a toda clase PRC.
 \begin{solution}
   
-  {\it Demostraci\'on: } Supongamos que existe $f$ p.r. y una clase $C$ PRC. 
-
-  Por definici'on de p.r., $f$ se puee obtener a partir de funciones inciales y por un n'umero finito de aplicaciones de composici'on y recursi'on primitiva. Es decir, que existe una lista de funciones $f_1, f_2, \dots, f_n$ tal que: 
-
+  {\it Demostraci\'on: } Una funci\'on es p.r. si se puede obtener a partir de las funciones iniciales por un n\'umero finito de aplicaciones de composici\'on y recursi\'on primitiva. Es la clas de funciones PRC m\'as chica. 
+  
   \begin{itemize}
-  \item $f_i$ o bien es una funci'on inicial (y por lo tanto est'a en $C$) o bien se obtiene por composici'on o recursi'on primitiva a partir de funciones $f_j$, con $j < i$ (y por lo tanto est'a en $C$). 
-  \item $f_n = f$
+   \item[$\Leftarrow$)] Como la clase de funciones p.r. es una clase PRC, luego si $f$ pertenece a toda clase PRC, en particular $f$ es p.r.
+   
+   \item[$\Rightarrow$)] Supongamos que existe $f$ p.r. y una clase $C$ PRC. 
+
+    Por definici'on de p.r., $f$ se puede obtener a partir de funciones inciales y por un n'umero finito de aplicaciones de composici'on y recursi'on primitiva. Es decir, que existe una lista de funciones $f_1, f_2, \dots, f_n$ tal que: 
+
+    \begin{itemize}
+    \item $f_i$ o bien es una funci'on inicial (y por lo tanto est'a en $C$) o bien se obtiene por composici'on o recursi'on primitiva a partir de funciones $f_j$, con $j < i$ (y por lo tanto est'a en $C$). 
+    \item $f_n = f$
+    \end{itemize}
+
+    Por inducci'on, todas las funciones de la lista est'an en $C$. En particular $f_n = f \in C$. 
   \end{itemize}
 
-  Por consiguiente (o m'as bien por inducci'on), todas las funciones de la lista est'an en $C$. En particular $f_n = f \in C$. 
+\end{solution}
+
+\question Probar que la clase de funciones p.r. es la clase PRC m\'as chica. 
+
+\begin{solution}
+ Se deduce de demostrar que una funci\'on es p.r. sii pertenece a toda clase PRC. 
 \end{solution}
 
 \question Sean $A$ y $B$ dos conjuntos c.e. Demostrar que $A \cup B$ y $A \cap B$ son c.e. ?`Es $A\backslash B$ c.e.?
@@ -132,9 +145,9 @@
 
   {\it Demostraci\'on: $A\backslash B$}
 
-  $A\backslash B$ NO es c.e.. Sea $A$ el conjunto de todos los programas, y $B$ s\'olo de aquellos que paran cuando se les da como entrada su n\'umero de programa. $A\backslash B$ es entonces el conjunto de programas que no se detienen cuando se les da su n\'umero de programa como entrada. 
+  Supongamos que $A\backslash B$ fuera c.e. Sea $A$ el conjunto de todos los programas, y $B$ s\'olo de aquellos que paran cuando se les da como entrada su n\'umero de programa. $A\backslash B$ es entonces el conjunto de programas que no se detienen cuando se les da su n\'umero de programa como entrada. 
   
-  Supongamos que $A\backslash B$ fuera c.e. Pero por definici\'on, un conjunto es c.e. si podemos decidir algor\'itmicamente si un elemento pertenece o no. Es decir que HALT($X,X$) ser\'ia computable. Absurdo!
+  Por definici\'on, un conjunto es c.e. si podemos decidir algor\'itmicamente si un elemento pertenece o no. Es decir que HALT($X,X$) ser\'ia computable. Absurdo! Y esto vino de suponer que $A\backslash B$ era c.e.
   
 \end{solution}
 
@@ -147,7 +160,7 @@
 
   {\it Teorema de Rice:} Si $A$ es un conjunto de 'indices tal que $\emptyset \neq A \neq \mathbb{N}$, $A$ no es computable. 
 
-  {\it Demostraci'on:} Supongamos la clase de funciones $C$ tal que $A = \{ x : \Phi_x \in C \}$ computable. Sea $f \in C$ y $g \neq C$ funciones parciales computables. Sea $h : \mathbb{N}^2 \rightarrow \mathbb{N}$ la siguiente funci'on parcial computable: 
+  {\it Demostraci'on:} Supongamos la clase de funciones $C$ tal que $A = \{ x : \Phi_x \in C \}$ computable. Sea $f \in C$ y $g \notin C$ funciones parciales computables. Sea $h : \mathbb{N}^2 \rightarrow \mathbb{N}$ la siguiente funci'on parcial computable: 
 
   $$
   h(t,x) = \left\{
@@ -212,7 +225,7 @@
 
 \end{solution}
 
-\question Enunciar Halt y demostrar que no es computable. (Con cualquiera de las demostraciones vistas.)
+\question Enunciar Halt y demostrar que no es computable (con cualquiera de las demostraciones vistas).
 
 \begin{solution}
 
@@ -383,11 +396,13 @@ Entonces $f(x)$ no es computable.
  
  Supongamos que es c.e. $\Rightarrow \exists g$ parcial computable tal que TOT=Dom($g$).
  
- Existe adem\'as $e$, tal que $\Phi_e(x)=\Phi_{g(x)}(x)+1$. Notar que esto se define para todo $x$. Luego $\Phi_e$ es total $\Rightarrow e\in$TOT$\Rightarrow \exists u : g(u)=e \Rightarrow \Phi_{g(u)}(x)=\Phi_{g(u)}(x)+1$. 
+ Entonces existe $e$, tal que $\Phi_e(x)=\Phi_{g(x)}(x)+1$. Notar que esto se define para todo $x$. 
  
- Absurdo si $x=u$, y esto vino de suponer que TOT es c.e.
+ Como $\Phi_e$ es total, $e\in$TOT. Por lo tanto existe $u$ tal que $g(u)=e$. 
  
- {\it Demostraci\'on: } TOT no co-c.e.
+ Luego, $\Phi_{g(u)}(x)=\Phi_{g(u)}(x)+1$. Absurdo si $x=u$, y esto vino de suponer que TOT es c.e.
+ 
+ {\it Demostraci\'on: } TOT no co-c.e (equivale a probar $\overline{\text{TOT}}$ no c.e).
  
  Supongamos que $\overline{\text{TOT}}$ c.e., existe entonces $d$ tal que $\overline{\text{TOT}}=$Dom($\Phi_d$). 
  
@@ -403,16 +418,17 @@ Entonces $f(x)$ no es computable.
  
  Tenemos
  \begin{equation*}
-    \Psi_P(x,d) = g(x,d) = \left\{ \begin{matrix} 
+    \Psi_P(d,x) = g(d,x) = \left\{ \begin{matrix} 
       \uparrow & \text{si } \Phi_d \text{ es total} \\ 
       0 & \text{si no}
     \end{matrix} \right.
   \end{equation*}
- Por el Teorema de la Recursi\'on: sea $e$ tal que $\Phi_e(x)=g(x,e)$. 
+  
+ Por el Teorema de la Recursi\'on: sea $e$ tal que $\Phi_e(x)=g(e,x)$. 
  
  \begin{itemize}
-  \item $\Phi_e$ es total $\Rightarrow g(e,d)\uparrow\text{ para todo } y \Rightarrow \Phi_e(x)\uparrow \text{ para todo } x\Rightarrow \Phi_e$ no es total.
-  \item $\Phi_e$ no es total $\Rightarrow g(e,d)=0 \text{ para todo } y \Rightarrow \Phi_e(x)=0 \text{ para todo } x \Rightarrow \Phi_e$ es total. 
+  \item $\Phi_e$ es total $\Rightarrow\forall x: g(e,x)\uparrow\Rightarrow\forall x:\Phi_e(x)\uparrow\Rightarrow \Phi_e$ no es total.
+  \item $\Phi_e$ no es total $\Rightarrow\forall x: g(e,x)=0 \Rightarrow\forall x: \Phi_e(x)=0\Rightarrow \Phi_e$ es total. 
  \end{itemize}
 
 \end{solution}
@@ -461,7 +477,7 @@ Entonces $f(x)$ no es computable.
  Tenemos que: 
  
   \begin{equation*}
-    \Psi_A(x) = \left\{ \begin{matrix} 
+    \Psi_P(x) = \left\{ \begin{matrix} 
       0 & \text{si } x\in A \\ 
       \uparrow & \text{si no}
     \end{matrix} \right.
@@ -471,10 +487,10 @@ Entonces $f(x)$ no es computable.
  
  La vuelta no es cierta. Lo demostramos con un contraejemplo. 
  
- Definimos $W_n=\{ x : \Phi_n(x)\} = $ el dominio del $n$-\'esimo programa, y a $K=\{n : n\in W_n\}$. Observemos que $n\in W_n$ sii $\Phi_n(n)\downarrow$ sii HALT($n,n$). $K$ es (a) c.e. pero (b) no computable. 
+ Definimos $W_n=\{ x : \Phi_n(x)\downarrow\} = $ el dominio del $n$-\'esimo programa, y a $K=\{n : n\in W_n\}$. Observemos que $n\in W_n$ sii $\Phi_n(n)\downarrow$ sii HALT($n,n$). $K$ es (a) c.e. pero (b) no computable. 
  
  \begin{enumerate}[(a)]
- \item $K$ es c.e. porque $K=\{x : g(n)\downarrow\}$
+ \item $K$ es c.e. porque $K=\{n : \Phi_n(n)\downarrow\}$
  \item Supongamos que $K$ fuera computable. Entonces $\overline{K}$ tambi\'en lo ser\'ia. Luego existe un $e$ tal que $\overline{K}=W_e$. Por lo tanto
  \begin{equation*}
   e \in K \Leftrightarrow e \in W_e \Leftrightarrow e\in \overline{K}
@@ -508,7 +524,7 @@ Entonces $f(x)$ no es computable.
   \end{tabular}
   \vspace{0.5cm}
 
-  Para cada $x$, vale que $x\in A$ o bien $a\in\overline{A}$. Entonces $\Psi_P$ computa $A$. 
+  Para cada $x$, vale que $x\in A$ o bien $x\in\overline{A}$. Entonces $\Psi_P$ computa $A$. 
 \end{itemize}
 
 \end{solution}
