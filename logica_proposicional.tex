@@ -9,14 +9,16 @@
  \item $\varphi\in\Gamma$ sii $\Gamma\vdash\varphi$
 \end{enumerate}
 
+\tomadoEl{2016-05-09, 2015-12-21, 2014-03-07}
+
 \begin{solution}
 
  {\it Def. } Un conjunto $\Gamma\subseteq$FORM es consistente si no existe $\varphi\in$FORM tal que $\Gamma\vdash\varphi$ y $\Gamma\nvdash\varphi$.
  
- {\it Def. } Un conjunto $\Gamma\subseteq$FORM es maximal consistente en SP si es consistente y para toda f\'ormula $\varphi$, $\varphi\in\Gamma$ o existe $\psi$ tal que $\Gamma\cup\{\varphi\}\vdash\psi$ y $\Gamma\cup\{\varphi\}\nvdash\psi$.
+ {\it Def. } Un conjunto $\Gamma\subseteq$FORM es maximal consistente en SP si es consistente y para toda f\'ormula $\varphi$: o bien $\varphi\in\Gamma$, o existe $\psi$ tal que $\Gamma\cup\{\varphi\}\vdash\psi$ y $\Gamma\cup\{\varphi\}\nvdash\psi$.
 
  \begin{enumerate}[a)]
-  \item No puede ser que $\varphi$ y $\neg\varphi$ est\'en en $\Gamma$ porque por punto b) ser\'ia inconsistente.
+  \item No puede ser que $\varphi$ y $\neg\varphi$ est\'en en $\Gamma$ porque  ser\'ia inconsistente.
   
   Supongamos que ninguna est\'a. Como $\Gamma$ es maximal y por proposici\'on ($\Gamma\cup\{\neg\varphi\}$ es inconsistente sii $\Gamma\vdash\varphi$): 
   
@@ -31,23 +33,21 @@
   
   \begin{itemize}
    \item[$\Rightarrow$)] Trivial porque o bien $\varphi$ es axioma o consecuencia inmediata de $\Gamma$ y por lo tanto $\forall v, v\vDash\varphi$. 
-   \item[$\Leftarrow$)] Por el absurdo, asumimos que $\Gamma\vdash\varphi$ y $\varphi\notin\Gamma$. Por maximalidad, $\Gamma\cup\{\varphi\}$ es inconsistente, y por lo tanto existe $\beta$ tal que:
-   
-   \begin{enumerate}[1.]
-    \item $\Gamma\cup\{\varphi\}\vdash\beta$ y $\Gamma\cup\{\varphi\}\nvdash\beta$
-    \item Por deducci\'on: $\Gamma\vdash\varphi\rightarrow\beta$ y $\Gamma\vdash\varphi\rightarrow\neg\beta$
-    \item Por MP: $\Gamma\vdash\beta$ y $\Gamma\nvdash\beta$.
-   \end{enumerate} 
-   
-   Por consiguiente, $\Gamma$ es inconsistente. Absurdo!
+   \item[$\Leftarrow$)] Por el absurdo, asumimos que $\Gamma\vdash\varphi$ y $\varphi\notin\Gamma$. (Me corrigieron que era una hip\'otesis absurda)
   \end{itemize}
 
  \end{enumerate}
 
 \end{solution}
 
+\question Definir consistente, maximal consistente y demostrar el Lema de Lindenbaum. 
+
+\tomadoEl{2014-12-11}
 
 \question Enunciar y demostrar el Lema de Lindenbaum para la l'ogica proposicional.
+
+\tomadoEl{2010-12-28, 2010-03-16}
+
 \begin{solution}
 
 {\it Lema de Lindenbaum:} Si $\Gamma \subseteq$ FORM es consistente, existe $\Delta$ maximal consistente tal que $\Gamma \subseteq \Delta$
@@ -79,8 +79,9 @@ Luego definimos $\Delta = \bigcup_{i\geq 0} \Gamma_i$. Y terminamos. $\Delta$ es
 
 \end{solution}
 
-
 \question Enunciar y demostrar el teorema de la Deducci\'on. 
+
+\tomadoEl{2014-02-14}
 
 \begin{solution}
 
@@ -135,7 +136,10 @@ Luego definimos $\Delta = \bigcup_{i\geq 0} \Gamma_i$. Y terminamos. $\Delta$ es
 
 \end{solution}
 
-\question Usando (el teorema de) correctitud de la lógica proposicional probar que si (un conjunto de f'ormulas) $\Gamma$ es satisfactible entonces $\Gamma$ es consistente. 
+\question Usando (el teorema de) correctitud de la lógica proposicional probar que si (un conjunto de f'ormulas) $\Gamma$ es satisfacible entonces $\Gamma$ es consistente. 
+
+\tomadoEl{2015-04-13, 2013-08-05, 2012-12-26}
+
 \begin{solution}
 
 Supongamos que $\Gamma$ es satisfacible, y sin embargo es inconsistente. 
@@ -150,7 +154,76 @@ Luego $\Gamma\vDash\varphi$ y $\Gamma\nvDash\varphi$, y por \'ultimo $v \vDash \
 
 \end{solution}
 
+\question Sea $\Gamma$ un conjunto de f\'ormulas de la l\'ogica proposicional. Demostrar que si $\Gamma$ es consistente entonces es satisfacible. 
+
+\tomadoEl{2017-03-17}
+
+\begin{solution}
+ 
+ Dado $\Gamma$ consistente, construimos $\Gamma'\supseteq\Gamma$ m.c. (Por Lindenbaum).
+ 
+ Definimos la interpretaci\'on $v$ tal que: 
+ 
+ \begin{center}
+  $v(p) = 1$ sii $p\in\Gamma'$
+ \end{center}
+ 
+ Demostremos que $v\vDash\varphi$ sii $\varphi\in\Gamma'$ por inducci\'on en la complejidad de $\varphi$ (es decir, cantidad de $\neg$ y $\rightarrow$ que aparecen en $\varphi$).
+
+ \begin{enumerate}[\quad]
+  \item[Caso base ($\varphi=p$):] Trivial por definici\'on de $v$. 
+
+  \item[Paso inductivo:] HI: $v\vDash\varphi$ sii $\varphi\in\Gamma'$ para toda $\varphi$ de complejidad $<m$.
+  
+  Sea $\varphi$ de complejidad $m$. Hay 2 casos: 
+  
+  \begin{enumerate}
+    \item $\varphi=\neg\psi$ tiene complejidad $m$. 
+    
+    \begin{itemize}
+    \item[($\Rightarrow$)] $v\vDash\varphi \Rightarrow v \nvDash \psi \Rightarrow$ (x HI) $\psi\notin\Gamma' \Rightarrow \neg\psi\in\Gamma' \Rightarrow \varphi\in\Gamma'$
+    \item[($\Leftarrow$)] $\varphi\in\Gamma' \Rightarrow \psi\notin\Gamma' \Rightarrow$ (x HI) $v\nvDash\psi \Rightarrow v\vDash\neg\psi \Rightarrow v\vDash\varphi$
+    \end{itemize}
+
+    \item $\varphi = \psi \rightarrow \rho$ tiene complejidad $m$. 
+    
+    \begin{itemize}
+     \item[($\Rightarrow$)] $v\vDash\varphi \Rightarrow v\vDash (\psi \rightarrow \rho) \Rightarrow v\nvDash\psi$ o $v\vDash\rho$
+     
+     \begin{itemize}
+      \item[-] $v\nvDash\psi \Rightarrow$ (x HI) $\psi\notin\Gamma' \Rightarrow \neg\psi\in\Gamma' \Rightarrow \Gamma'\vdash\neg\psi$
+      
+	Sabemos que $\vdash\neg\psi\rightarrow(\psi\rightarrow\rho)$. Por MP, $\Gamma'\vdash\psi\rightarrow\rho$. 
+	
+	Entonces $\psi\rightarrow\rho\in\Gamma'$.
+      
+      \item[-] $v\vDash\rho \Rightarrow$ (x HI) $\rho\in\Gamma' \Rightarrow \Gamma'\vdash\rho$ 
+	
+	Sabemos por SP1 que $\vdash\rho\rightarrow(\psi\rightarrow\rho)$. Por MP, $\Gamma'\vdash\psi\rightarrow\rho$.
+	
+	Entonces $\psi\rightarrow\rho\in\Gamma'$
+      
+     \end{itemize}
+     
+     \item[($\Leftarrow$)] $v\nvDash\varphi \Rightarrow v\vDash\psi$ y $v\nvDash\rho \Rightarrow$ (x HI) $\psi\in\Gamma'$ y $\rho\notin\Gamma' \Rightarrow \psi\in\Gamma'$ y $\neg\rho\in\Gamma' \Rightarrow \Gamma'\vdash\psi$ y $\Gamma'\vdash\neg\rho$.
+     
+     Sabemos que $\vdash\psi\rightarrow(\neg\rho\rightarrow\neg(\psi\rightarrow\rho))$. Aplicando MP 2 vences, $\Gamma'\vdash\neg(\psi\rightarrow\rho)$. 
+     
+     Por lo tanto, $\neg(\psi\rightarrow\rho)\in\Gamma'$. Entonces $\psi\rightarrow\rho\notin\Gamma'$.
+     
+    \end{itemize}
+
+    
+  \end{enumerate}
+
+
+ \end{enumerate}
+
+\end{solution}
+
 \question Demostrar que $\Gamma \cup \{\neg\varphi\}$ es inconsistente si y s\'olo si $\varphi$ es consecuencia sint\'actica de $\Gamma$.
+
+\tomadoEl{2014-12-22}
 
 \begin{solution}
  
@@ -197,7 +270,9 @@ Luego $\Gamma\vDash\varphi$ y $\Gamma\nvDash\varphi$, y por \'ultimo $v \vDash \
 
 \end{solution}
 
-\question (Mat.) Sea {\it Var} el conjunto de variables proposicionales de la l\'ogica proposicional. Probar que si $f : Var \rightarrow \{0,1\}$ es una funci\'on entonces existe una valuaci\'on $v: F \rightarrow \{0,1\}$ que extiende a $f$, donde $F$ es el conjunto de las f\'ormulas de la l\'ogica proposicional. 
+\question Sea {\it Var} el conjunto de variables proposicionales de la l\'ogica proposicional. Probar que si $f : Var \rightarrow \{0,1\}$ es una funci\'on entonces existe una valuaci\'on $v: F \rightarrow \{0,1\}$ que extiende a $f$, donde $F$ es el conjunto de las f\'ormulas de la l\'ogica proposicional. 
+
+\tomadoEl{2014-10-21 (por Matem\'atica)}
 
 \begin{solution}
  

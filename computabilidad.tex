@@ -3,6 +3,9 @@
 
 \begin{questions}
 \question Probar que la clase de funciones computables es una clase PRC.
+
+\tomadoEl{2013-08-05}
+
 \begin{solution}
   
   Idea: una clase de funci'on es PRC si est'an las iniciales y el resto se forma por composici'on o recursi'on. Lo que hay que demostrar es que las computables cumplen esto. 
@@ -18,7 +21,13 @@
   Falta ver que la clase de funciones computables est'a cerrada por \begin{inparaenum}[(a)] \item composici'on; y \item recursi'on primitiva. \end{inparaenum}
 
   \begin{enumerate}[(a)]
-  \item Si $h$ se obtiene a partir de las funciones (parciales) computables $f, g_1, \dots, g_k$ por composici'on, entonces $h$ es computable. Y esto es cierto porque el siguiente programa computa $h$: 
+  \item Si $h$ se obtiene a partir de las funciones (parciales) computables $f, g_1, \dots, g_k$ por composici'on, entonces $h$ es computable. 
+  
+  \begin{equation*}
+   h(x_1, \dots, x_n) = f(g_1(x_1, \dots, x_n), \dots, g_k(x_1, \dots, x_n))
+  \end{equation*}
+
+  Y esto es cierto porque el siguiente programa computa $h$: 
   
   \vspace{0.5cm}
   \begin{tabular}{l}
@@ -31,26 +40,35 @@
   
   Y si $f, g_1, \dots, g_k$ son computables, entonces $h$ es computable.
   
-  \item Si $h$ se obtiene a partir de $g$ por recursi'on primitiva y $g$ es computable entonces $h$ es computable. 
+  \item Si $h$ se obtiene a partir de $f$ y $g$ por recursi'on primitiva y ambas son computable entonces $h$ es computable. 
+  
+  \begin{eqnarray*}
+    h(x_1, \dots, x_n, 0) &=& f(x_1, \dots, x_n) \\
+    h(x_1, \dots, x_n, t+1) &=& g(h(x_1, \dots, x_n, t), x_1, \dots, x_n, t)
+  \end{eqnarray*}
+
   
   En efecto, el siguiente programa computa $h$: 
   
   \vspace{0.5cm}
   \begin{tabular}{rl}
-	  & $Y \leftarrow k$ \\ 
-    $[A]$ & IF $X=0$ GOTO $E$ \\
-	  & $Y \leftarrow g(Z,Y)$ \\
-	  & $Z \leftarrow Z+1$ \\
-	  & $X \leftarrow X-1$ \\
+	  & $Y \leftarrow f(X_1, \dots, X_n)$ \\ 
+	  & $T \leftarrow 0$ \\ 
+    $[A]$ & IF $T=X_{n+1}$ GOTO $E$ \\
+	  & $Y \leftarrow h(Y,X_1, \dots, X_N, T)$ \\
+	  & $T \leftarrow T+1$ \\
 	  & GOTO $A$
   \end{tabular}
   \vspace{0.5cm}
   
-  Y por lo tanto, si $g$ es computable, $h$ tambi'en. 
+  Y por lo tanto, si $f$ y $g$ son computable, $h$ tambi'en. 
   \end{enumerate}
 \end{solution}
 
 \question Probar que una funci'on es primitiva recursiva sii pertenece a toda clase PRC.
+
+\tomadoEl{2015-12-21, 2015-04-13, 2012-12-26}
+
 \begin{solution}
   
   {\it Demostraci\'on: } Una funci\'on es p.r. si se puede obtener a partir de las funciones iniciales por un n\'umero finito de aplicaciones de composici\'on y recursi\'on primitiva. Es la clas de funciones PRC m\'as chica. 
@@ -79,6 +97,9 @@
 \end{solution}
 
 \question Sean $A$ y $B$ dos conjuntos c.e. Demostrar que $A \cup B$ y $A \cap B$ son c.e. ?`Es $A\backslash B$ c.e.?
+
+\tomadoEl{2010-12-28}
+
 \begin{solution}
   
   {\it Definici\'on:} Un conjunto $A$ es c.e. cuando existe una funci'on parcial computable $g: \mathbb{N} \rightarrow \mathbb{N}$ tal que: 
@@ -154,6 +175,9 @@
 \question Seas $A$ y $B$ conjuntos de una clase PRC $C$. Entonces $A\cup B$, $A\cap B$, y $\bar{A}$ est'an en $C$.
 
 \question Definir conjunto de índices. Enunciar y demostrar el Teorema de Rice.
+
+\tomadoEl{2017-03-17, 2016-05-09, 2015-04-13, 2014-12-11, 2014-03-07, 2014-02-14, 2013-08-05, 2012-12-26, 2010-12-28, 2010-03-16}
+
 \begin{solution}
   
   {\it Definici'on:} un conjunto de naturales $A$ es un conjunto de 'indices si existe una clase de funciones $\mathbb{N} \rightarrow \mathbb{N}$ parciales computables $C$ tal que $A = \{ x : \Phi_x \in C \}$. 
@@ -179,37 +203,52 @@
 
   \end{solution}
 
-  \question Enunciar y demostrar el Teorema de la Recursi'on.
+\question Enunciar y demostrar el Teorema de la Recursi'on.
+
+\tomadoEl{2014-12-22}
+
   \begin{solution}
   
   {\it Teorema de la Recursi\'on:} Si $g : \mathbb{N}^{n+1} \rightarrow \mathbb{N}$ es parcial computable, existe un $e$ tal que
 
   \begin{equation*}
-  \Phi_e(x_1, \dots, x_n) = g(e, x_1, \dots, x_n)
+  \Phi_e^{(n)}(x_1, \dots, x_n) = g(e, x_1, \dots, x_n)
   \end{equation*}
 
   {\it Demostraci'on:} Sea $S_n^1$ la funci'on del teorema del Par'ametro, tal que: 
 
-  \begin{equation*}
-  \Phi_y^{(n+1)}(x_1, \dots, x_n, u) = \Phi_{S_n^1(u,y)}^{(n)}(x_1, \dots, x_n)
-  \end{equation*}
+  \begin{equation}\label{parametro}
+    \Phi_y^{(n+1)}(x_1, \dots, x_n, u) = \Phi_{S_n^1(u,y)}^{(n)}(x_1, \dots, x_n)
+  \end{equation}
 
   La funci'on $(x_1, \dots, x_n, v) \mapsto g(S_n^1(v,v), x_1, \dots, x_n)$ es parcial computable, de modo que existe $d$ tal que: 
 
-  \begin{eqnarray*}
-  g(S_n^1(v,v), x_1, \dots, x_n) &=& \Phi_d^{(n+1)}(x_1, \dots, x_n, v) \\
-				  &=& \Phi_{S_n^1(v,d)}^{(n)}(x_1, \dots, x_n)
-  \end{eqnarray*}
+  \begin{equation*}
+    \Phi_d^{(n+1)}(x_1, \dots, x_n, v) = g(S_n^1(v,v), x_1, \dots, x_n) 
+  \end{equation*}
+  
+  Por \ref{parametro} vale 
+  
+  \begin{equation*}
+    \Phi_d^{(n+1)}(x_1, \dots, x_n, v) = \Phi_{S_n^1(v,d)}^{(n)}(x_1, \dots, x_n)
+  \end{equation*}
+  
+  Luego
+  
+  \begin{equation*}
+    g(S_n^1(v,v), x_1, \dots, x_n) = \Phi_{S_n^1(v,d)}^{(n)}(x_1, \dots, x_n)
+  \end{equation*}
 
-  Como $d$ est'a fijo, y $v$ es variable, elegimos $v = d$ y $e = S_n^1(d,d)$. Luego
+  Como $d$ est'a fijo, y $v$ es variable, elegimos $v \leftarrow d$ y $S_n^1(d,d) \leftarrow e$, llegamos a lo que quer\'iamos
 
-  \begin{eqnarray*}
-  g(S_n^1(v,v), x_1, \dots, x_n) &=& \Phi_{S_n^1(v,v)}^{(n)}(x_1, \dots, x_n) \\
-	    g(e, x_1, \dots, x_n) &=& \Phi_e(x_1, \dots, x_n)
-  \end{eqnarray*}
+  \begin{equation*}
+    g(e, x_1, \dots, x_n) = \Phi_e(x_1, \dots, x_n)
+  \end{equation*}
 \end{solution}
 
 \question Enunciar y demostrar el Teorema de Punto Fijo.
+
+\tomadoEl{2014-03-07}
 
 \begin{solution}
 
@@ -226,6 +265,8 @@
 \end{solution}
 
 \question Enunciar Halt y demostrar que no es computable (con cualquiera de las demostraciones vistas).
+
+\tomadoEl{2014-12-11, 2010-02-23}
 
 \begin{solution}
 
@@ -267,6 +308,8 @@ Si bien $e$ est\'a fijo, $x$ es variable. Llegamos a un absurdo con $x=e$.
 
 \question Exhibir una función computable que no sea p.r. y demostrarlo.
 
+\tomadoEl{2010-02-23}
+
 \begin{solution}
 
 Sea la funci\'on $\tilde{\Phi}_e^{(n)}(x_1,\dots,x_n)$ computable que simula a la $e$-\'esima funci\'on p.r. con entrada $x_1, \dots, x_n$.
@@ -281,7 +324,9 @@ $e$ est\'a fijo pero $x$ es variable. As\'i que instanciando $x=e$, llegamos a q
 
 \end{solution}
 
-\question (Mat.) Probar que la funci\'on $\tau : \mathrm{N} \rightarrow \mathrm{N}$ que asigna a cada n\'umero natural positivo $n$ el n\'umero de divisores positivos $n$ y $\tau(0)=0$, es una funci\'on recursiva primitiva. 
+\question Probar que la funci\'on $\tau : \mathrm{N} \rightarrow \mathrm{N}$ que asigna a cada n\'umero natural positivo $n$ el n\'umero de divisores positivos $n$ y $\tau(0)=0$, es una funci\'on recursiva primitiva. 
+
+\tomadoEl{2014-10-21 (por Matem\'atica)}
 
 \begin{solution}
 % http://www.cubawiki.com.ar/index.php?title=Final_del_21/10/14_(L%C3%B3gica_y_Computabilidad) 
@@ -353,7 +398,9 @@ Falta ver que $\tau (n) = f(n,n)$. Probamos por inducción en el segundo paráme
 
 \end{solution} 
 
-\question (Mat.) Dar un ejemplo de una funci\'on no computable de una variable tal que la imagen tenga tres elementos. 
+\question Dar un ejemplo de una funci\'on no computable de una variable tal que la imagen tenga tres elementos. 
+
+\tomadoEl{2014-10-21 (por Matem\'atica)}
 
 \begin{solution}
 Sea $f$: 
@@ -383,6 +430,8 @@ Entonces $f(x)$ no es computable.
 \end{solution}
 
 \question Probar que TOT no es c.e. ni co-c.e.
+
+\tomadoEl{2014-12-22, 2014-02-14}
 
 \begin{solution}
 
@@ -434,6 +483,8 @@ Entonces $f(x)$ no es computable.
 \end{solution}
 
 \question Probar que todo conjunto r.e. infinito contiene un conjunto recursivo infinito. 
+
+\tomadoEl{2010-03-16}
 
 \begin{solution}
  
@@ -502,6 +553,8 @@ Entonces $f(x)$ no es computable.
 
 \question Probar que un conjunto $A\subseteq \mathbb{N}$ es computable sii $A$ y $\overline{A}$ son c.e.
 
+\tomadoEl{2015-12-21}
+
 \begin{solution}
 \begin{itemize}
  \item[$\Rightarrow$)] Si $A$ es computable entonces $\overline{A}$ es computable. 
@@ -528,5 +581,13 @@ Entonces $f(x)$ no es computable.
 \end{itemize}
 
 \end{solution}
+
+\question Demostrar que $A$ es computable sii $A$ y $\overline{A}$ son r.e.
+
+\tomadoEl{2017-03-07}
+
+\question Probar que $A \subseteq \mathbb{N}$ es c.e. sii es imagen de una funci\'on p.r.
+
+\tomadoEl{2016-05-09}
 
 \end{questions}
